@@ -19,6 +19,8 @@ RUN cd /usr/local/src/zookeeper && git checkout release-$ZK_VERSION
 RUN ant package
 RUN mv /usr/local/src/zookeeper/build/zookeeper-$ZK_VERSION-beta /opt/zookeeper
 RUN mkdir /opt/zookeeper/data
+RUN touch /opt/zookeeper/conf/zoo.cfg
+RUN chmod -R a+rw /opt/zookeeper
 
 WORKDIR "/opt/zookeeper"
 CMD echo "tickTime=2000" | tee /opt/zookeeper/conf/zoo.cfg && echo "dataDir=/opt/zookeeper/data" | tee -a /opt/zookeeper/conf/zoo.cfg && echo "clientPort=$ZK_CLIENT_PORT" | tee -a /opt/zookeeper/conf/zoo.cfg && echo "admin.serverPort=$ZK_ADMIN_PORT" | tee -a /opt/zookeeper/conf/zoo.cfg && /opt/zookeeper/bin/zkServer.sh start-foreground
