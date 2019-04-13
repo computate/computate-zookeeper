@@ -9,5 +9,5 @@ docker push computate/computate-zookeeper:latest
 git add -i
 git commit
 git push
-oc replace --force -f "https://raw.githubusercontent.com/computate/openshift-zookeeper/master/templates/zookeeper.json"
+oc replace --force -f "https://raw.githubusercontent.com/computate/computate-zookeeper/master/openshift-computate-zookeeper.json"
 

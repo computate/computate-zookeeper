@@ -21,11 +21,6 @@
             "required": true
         }
         , {
-            "name": "ZK_VERSION",
-            "value": "3.5.3",
-            "required": false
-        }
-        , {
             "name": "ZK_CLIENT_PORT",
             "value": "8080",
             "required": false
