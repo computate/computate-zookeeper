@@ -1,4 +1,5 @@
 # computate-zookeeper
+```bash
 sudo mkdir /usr/local/src/computate-zookeeper
 sudo chown $USER: /usr/local/src/computate-zookeeper/
 git clone git@github.com:computate/computate-zookeeper.git /usr/local/src/computate-zookeeper/
@@ -10,4 +11,4 @@ git add -i
 git commit
 git push
 oc replace --force -f "https://raw.githubusercontent.com/computate/computate-zookeeper/master/openshift-computate-zookeeper.json"
-
+```
