@@ -1,0 +1,97 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  annotations:
+    description: 'Zookeeper for managing configs in the cloud. '
+    iconClass: icon-zookeeper
+    openshift.io/display-name: Zookeeper
+    tags: zookeeper
+    version: 3.5.3
+  creationTimestamp: '2019-04-13T04:38:46Z'
+  name: computate-zookeeper
+  namespace: computateorg
+  resourceVersion: '594274549'
+  selfLink: >-
+    /apis/template.openshift.io/v1/namespaces/computateorg/templates/computate-zookeeper
+  uid: 06910b73-5da6-11e9-84bb-12b5519f9b58
+objects:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: zookeeper-data-volume-claim
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        description: Zookeeper client port.
+      labels:
+        application: '${APPLICATION_NAME}'
+      name: '${APPLICATION_NAME}'
+    spec:
+      ports:
+        - name: client-port
+          port: 8080
+          targetPort: 8080
+        - name: admin-port
+          port: 8081
+          targetPort: 8081
+      selector:
+        deploymentConfig: '${APPLICATION_NAME}'
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        application: '${APPLICATION_NAME}'
+      name: '${APPLICATION_NAME}'
+    spec:
+      replicas: 1
+      selector:
+        deploymentConfig: '${APPLICATION_NAME}'
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            application: '${APPLICATION_NAME}'
+            deploymentConfig: '${APPLICATION_NAME}'
+          name: '${APPLICATION_NAME}'
+        spec:
+          containers:
+            - env: []
+              image: computate/computate-zookeeper
+              name: '${APPLICATION_NAME}'
+              volumeMounts:
+                - mountPath: /opt/zookeeper/data
+                  name: zookeeper-data-volume
+              ports:
+                - name: client-port
+                  containerPort: 8080
+                  protocol: TCP
+                - name: admin-port
+                  containerPort: 8081
+                  protocol: TCP
+              securityContext:
+                privileged: false
+          volumes:
+            - name: zookeeper-data-volume
+              persistentVolumeClaim:
+                claimName: zookeeper-data-volume-claim
+      triggers:
+        - type: ConfigChange
+parameters:
+  - description: The name for the application.
+    displayName: Application Name
+    name: APPLICATION_NAME
+    required: true
+    value: computate-zookeeper
+  - name: ZK_CLIENT_PORT
+    value: '8080'
+  - name: ZK_ADMIN_PORT
+    value: '8081'
+
