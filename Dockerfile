@@ -1,4 +1,4 @@
-FROM openshift/base-centos7:latest
+FROM registry.access.redhat.com/ubi8/ubi
 
 MAINTAINER Christopher Tate <computate@computate.org>
 
@@ -14,7 +14,7 @@ ENV APP_NAME=zookeeper \
     APP_DIST=zookeeper-3.6.0 \
     APP_CLIENT_PORT=8080 \
     APP_ADMIN_PORT=8081 \
-    INSTALL_PKGS="git java-1.8.0-openjdk-devel maven"
+    INSTALL_PKGS="git java-1.8.0-openjdk-devel maven hostname"
 
 EXPOSE $APP_CLIENT_PORT
 EXPOSE $APP_ADMIN_PORT
