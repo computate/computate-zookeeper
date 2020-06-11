@@ -22,6 +22,7 @@ WORKDIR $APP_SRC
 RUN mvn clean install -DskipTests
 RUN tar xf $APP_SRC/$APP_NAME-assembly/target/apache-$APP_NAME-$APP_VERSION-bin.tar.gz -C $APP_OPT --strip-components=1
 RUN install -d $APP_DATA
+RUN chgrp -R 0 $APP_SRC $APP_OPT $APP_DATA && chmod -R g=u $APP_SRC $APP_OPT $APP_DATA
 RUN chmod a+x $APP_OPT/bin/*
 
 USER 1001
