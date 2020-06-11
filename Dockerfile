@@ -17,7 +17,7 @@ ENV APP_NAME=zookeeper \
 EXPOSE $APP_CLIENT_PORT
 
 RUN yum install -y $INSTALL_PKGS && yum clean all
-RUN install -g 0 -m g=0 -d $APP_SRC $APP_OPT $APP_DATA
+RUN install -g 0 -m g=u -d $APP_SRC $APP_OPT $APP_DATA
 RUN git clone $APP_REPO $APP_SRC --branch $APP_TAG
 WORKDIR $APP_SRC
 RUN mvn clean install -DskipTests
