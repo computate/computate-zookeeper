@@ -25,5 +25,5 @@ RUN install -d $APP_DATA
 
 USER 1001
 WORKDIR "$APP_OPT"
-CMD echo "tickTime=2000" | tee $APP_OPT/conf/zoo.cfg && echo "dataDir=$APP_DATA" | tee -a $APP_OPT/conf/zoo.cfg && echo "clientPort=$APP_CLIENT_PORT" | tee -a $APP_OPT/conf/zoo.cfg && echo "admin.enableServer=false" | tee -a $APP_OPT/conf/zoo.cfg && $APP_OPT/bin/zkServer.sh start-foreground
+CMD $APP_OPT/bin/zkServer.sh start-foreground
 
