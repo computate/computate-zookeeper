@@ -11,7 +11,6 @@ ENV APP_NAME=zookeeper \
     APP_DATA=/opt/zookeeper/data \
     APP_DIST=zookeeper-3.6.0 \
     APP_CLIENT_PORT=8080 \
-    APP_ADMIN_PORT=8081 \
     INSTALL_PKGS="git java-1.8.0-openjdk-devel maven hostname"
 
 EXPOSE $APP_CLIENT_PORT
@@ -26,5 +25,5 @@ RUN install -d $APP_DATA
 
 USER 1001
 WORKDIR "$APP_OPT"
-CMD echo "tickTime=2000" | tee $APP_OPT/conf/zoo.cfg && echo "dataDir=$APP_DATA" | tee -a $APP_OPT/conf/zoo.cfg && echo "clientPort=$APP_CLIENT_PORT" | tee -a $APP_OPT/conf/zoo.cfg && echo "admin.serverPort=$APP_ADMIN_PORT" | tee -a $APP_OPT/conf/zoo.cfg && $APP_OPT/bin/zkServer.sh start-foreground
+CMD echo "tickTime=2000" | tee $APP_OPT/conf/zoo.cfg && echo "dataDir=$APP_DATA" | tee -a $APP_OPT/conf/zoo.cfg && echo "clientPort=$APP_CLIENT_PORT" | tee -a $APP_OPT/conf/zoo.cfg && echo "admin.enableServer=false" | tee -a $APP_OPT/conf/zoo.cfg && $APP_OPT/bin/zkServer.sh start-foreground
 
