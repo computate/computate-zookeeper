@@ -10,7 +10,7 @@ ENV APP_NAME=zookeeper \
     APP_OPT=/opt/zookeeper \
     APP_DATA=/opt/zookeeper/data \
     APP_DIST=zookeeper-3.6.0 \
-    APP_CLIENT_PORT=8080 \
+    APP_CLIENT_PORT=2181 \
     INSTALL_PKGS="git java-1.8.0-openjdk-devel maven hostname"
 
 EXPOSE $APP_CLIENT_PORT
